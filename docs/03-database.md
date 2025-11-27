@@ -641,19 +641,14 @@ func (r *MessageRepository) CountByMailboxID(mailboxID string) (int, error) {
 **Что делаем:**  
 Выполняем SQL-скрипт, чтобы создать таблицы в базе данных.
 
-**Подключаемся к PostgreSQL:**
-```bash
-docker exec -it tempmail-postgres psql -U postgres -d tempmail
-```
-
-**Выполняем миграцию (копируем содержимое `migrations/001_init.up.sql`):**
-```sql
--- Вставьте содержимое файла 001_init.up.sql
+**Выполняем миграцию из PowerShell:**
+```powershell
+Get-Content migrations/001_init.up.sql | docker exec -i tempmail-postgres psql -U postgres -d tempmail
 ```
 
 **Проверяем таблицы:**
-```sql
-\dt
+```powershell
+docker exec -it tempmail-postgres psql -U postgres -d tempmail -c "\dt"
 ```
 
 **Результат:**
@@ -666,10 +661,6 @@ docker exec -it tempmail-postgres psql -U postgres -d tempmail
  public | messages    | table | postgres
 ```
 
-**Выходим:**
-```sql
-\q
-```
 
 ---
 
